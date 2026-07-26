@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . .
 
 # Build the application
-RUN GOOS=linux make install && make swagger && make build
+RUN GOOS=linux make swagger && make install && make build
 
 # Final stage
 FROM alpine:latest

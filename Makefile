@@ -14,10 +14,9 @@ BINARY_NAME=subscriptions
 DOCKER_IMAGE=subscriptions-service:latest
 
 install: ## Install dependencies
+	go install github.com/pressly/goose/v3/cmd/goose@latest
 	go mod download
 	go mod tidy
-	go install github.com/swaggo/swag/cmd/swag@latest
-	go install github.com/pressly/goose/v3/cmd/goose@latest
 
 build: ## Build the application
 	go build -a -o bin/$(BINARY_NAME) ./cmd/api

@@ -20,19 +20,19 @@ Swagger documentation is integrated into service and is available via endpoint: 
 3. Run `make docker-rebuild` to compile, build and deploy service to your Docker environment
 
 *Important notes regarding database creation in docker environment*  
-*Service's database will be created only on the first run - at the moment when no `go-online-subscriptions_postgres_data` Docker volume exists and mounted. To recreate the database you should stop Docker containers with `make docker-down` command, then delete the volume by `docker volume rm go-online-subscriptions_postgres_data`*  
+*Service's database will be created only on the first run - at the moment when no `go-online-subscriptions_postgres_data` Docker volume exists and mounted. To re-create the database you should stop Docker containers with `make docker-down` command, then delete the volume by `docker volume rm go-online-subscriptions_postgres_data`*  
 
 #### Local build and run
 - make sure you are able to connect to your PostgreSQL server in your local network
 - create PostgreSQL `subscriptions` database
-- run `make install && make swagger && make build` to fully build project
+- run `make swagger && make install && make build` to fully build project
 - run `make run` to run service locally. SQL migrations will be applied automatically
 
 #### Other useful `make` commands
 - `make install` - downloads and installs project dependencies
-- `make swagger` - builds swagger docs
+- `make swagger` - installs swagger and builds swagger docs
 - `make build` - compiles the project
-- `make test` - run test
+- `make test` - runs tests
 - `make clean` - clean up project from generated files
 - `make docker-build` - builds Docker image
 - `make docker-up` - starts service in Docker container
