@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres
+    container_name: subscriptions_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - subscriptions_network
+
+  api:
+    image: subscriptions-service
+    container_name: subscriptions_service
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVICE_NAME=${SERVICE_NAME}
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=${SERVER_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@subscriptions_postgres:5432/${DB_NAME}?sslmode=disable
+      - DATABASE_MAX_CONNECTIONS=${DATABASE_MAX_CONNECTIONS}
+      - DATABASE_CONNECTION_LIFETIME=${DATABASE_CONNECTION_LIFETIME}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - subscriptions_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  subscriptions_network:
+    driver: bridge
