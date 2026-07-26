@@ -122,15 +122,14 @@ curl -X 'PUT' \
 }' -v
 
 curl -X 'PUT' \
-  'http://localhost:8080/api/v1/subscriptions/22' \
+  'http://localhost:8080/api/v1/subscriptions/1' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "price": 0,
-  "service_name": "",
-  "start_date": "07-2026",
-  "stop_date": "07-2026",
-  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cbd"
+  "price": 14,
+  "service_name": "MeGoo",
+  "start_date": "04-2026",
+  "user_id": "60601fee-2bf1-4721-ae6f-7636e79a0cba"
 }' -v
 
 curl -X 'PUT' \

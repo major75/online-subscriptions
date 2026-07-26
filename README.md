@@ -4,7 +4,7 @@ An example of simple users online subscriptions aggregation service written on G
 #### Swagger notes
 Swagger documentation is integrated into service and is available via endpoint: `/docs/index.html` in your actual service's deployment url, for example: `http://localhost:8080/docs/index.html`  
 
-### Prerequisites of you build host
+### Build host prerequisites
 - Git and make utilities should be installed  
 - GoLang compiler and environment should be installed and set up
 - Docker with Docker Compose version v2.x.x should be installed and set up
@@ -12,14 +12,14 @@ Swagger documentation is integrated into service and is available via endpoint: 
 ### Build and run
 1. Clone project to your working directory
 2. In the project's root create `.env` file from project's `.env.example`
-3. Customize `.env` file according to your build and deployment environment
+3. Edit `.env` file according to your build and deployment environment
 
 #### Build and run service in Docker container
 1. Edit project's `docker-compose.yml` file to match your deployment environment
-2. Edit `./database/init.sql` that creating service's database name matches `DB_NAME` variable from `.env` file  
+2. Edit `./database/init.sql` so that creating service's database name match `DB_NAME` variable from `.env` file  
 3. Run `make docker-rebuild` to compile, build and deploy service to your Docker environment
 
-*Important notes regarding database creation in docker environment*  
+***Important notes regarding database creation in docker environment***  
 *Service's database will be created only on the first run - at the moment when no `online-subscriptions_postgres_data` Docker volume exists and mounted. To re-create the database you should stop Docker containers with `make docker-down` command, then delete the volume by `docker volume rm online-subscriptions_postgres_data`*  
 
 #### Local build and run

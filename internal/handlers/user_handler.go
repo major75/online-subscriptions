@@ -213,6 +213,11 @@ func (u *UserHandler) UpdateSubscription(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	if req.StopDate != nil && (!req.StartDate.Time.Before(req.StopDate.Time)) {
+		utils.RespondWithErrorStatus(w, u.logger, "Start_date should be before stop_date", http.StatusBadRequest)
+		return
+	}
+
 	response, err := u.subscriptionRepo.Update(r.Context(), uint32(id), req)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -271,6 +276,11 @@ func (u *UserHandler) PatchSubscription(w http.ResponseWriter, r *http.Request) 
 		}
 
 		utils.RespondWithErrorStatus(w, u.logger, msg, http.StatusBadRequest)
+		return
+	}
+
+	if req.StopDate != nil && (!req.StartDate.Time.Before(req.StopDate.Time)) {
+		utils.RespondWithErrorStatus(w, u.logger, "Start_date should be before stop_date", http.StatusBadRequest)
 		return
 	}
 
